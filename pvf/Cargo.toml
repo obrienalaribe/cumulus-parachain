@@ -1,0 +1,30 @@
+[package]
+name = "pba-pvf"
+description = "A cumulusless parachain"
+build = "build.rs"
+version = "0.1.0"
+edition = "2018"
+authors = ["PBA students"]
+
+[dependencies]
+blake3 = { version = "1.3.3", default-features = false }
+
+polkadot-parachain = { git = "https://github.com/paritytech/polkadot", default-features = false, features = [ "wasm-api" ] }
+parity-scale-codec = { version = "3.1.5", default-features = false, features = ["derive"] }
+
+sp-std = { git = "https://github.com/paritytech/substrate", branch = "master", default-features = false }
+
+# dlmalloc = { version = "0.2.4", features = [ "global" ] }
+# We need to make sure the global allocator is disabled until we have support of full substrate externalities
+# sp-io = { git = "https://github.com/paritytech/substrate", branch = "master", default-features = false, features = [ "disable_allocator" ] }
+
+[build-dependencies]
+substrate-wasm-builder = { git = "https://github.com/paritytech/substrate", branch = "master" }
+
+[features]
+default = ["std"]
+std = [
+	"polkadot-parachain/std",
+	"sp-std/std",
+	"blake3/std",
+]
